@@ -19,6 +19,9 @@ def findAngle(x1, y1, x2, y2):
     degree = int(180 / m.pi) * theta
     return degree
 
+def print_num(num):
+    print(num)
+
 def sendWarning(x):
     pass
 
@@ -169,6 +172,8 @@ class VideoCamera(object):
 
         total_time = good_time + bad_time
 
+        correct_percent = (good_time/total_time) * 100
+
         # print_num(good_frames)
 
         # Pose time.
@@ -187,6 +192,9 @@ class VideoCamera(object):
 
         time_string_total = 'Total Posture Time : ' + str(round(total_time, 1)) + 's'
         cv2.putText(image, time_string_total, (10, h - 75), font, 0.9, blue, 2)
+
+        percent_string = str(round(correct_percent, 2)) + ' %'
+        cv2.putText(image, percent_string, (w-160, h - 75), font, 1.2, green, 2)
 
 
         # print(round(good_time, 2), round(bad_time, 2), round(total_time, 2))
