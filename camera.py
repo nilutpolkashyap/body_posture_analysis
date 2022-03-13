@@ -139,7 +139,7 @@ class VideoCamera(object):
         # Determine whether good posture or bad posture.
         # The threshold angles have been set based on intuition.
         if neck_inclination < 40 and torso_inclination < 10:
-            self.bad_frames = 0
+            # self.bad_frames = 0
             self.good_frames += 1
             
             cv2.putText(image, angle_text_string, (10, 30), font, 0.9, light_green, 2)
@@ -153,7 +153,7 @@ class VideoCamera(object):
             cv2.line(image, (l_hip_x, l_hip_y), (l_hip_x, l_hip_y - 100), green, 4)
 
         else:
-            self.good_frames = 0
+            # self.good_frames = 0
             self.bad_frames += 1
 
             cv2.putText(image, angle_text_string, (10, 30), font, 0.9, red, 2)
@@ -170,15 +170,29 @@ class VideoCamera(object):
         good_time = (1 / fps) * self.good_frames
         bad_time =  (1 / fps) * self.bad_frames
 
+        total_time = good_time + bad_time
+
         # print_num(good_frames)
 
         # Pose time.
-        if good_time > 0:
-            time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
-            cv2.putText(image, time_string_good, (10, h - 20), font, 0.9, green, 2)
-        else:
-            time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
-            cv2.putText(image, time_string_bad, (10, h - 20), font, 0.9, red, 2)
+        # if good_time > 0:
+        #     time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
+        #     cv2.putText(image, time_string_good, (10, h - 20), font, 0.9, green, 2)
+        # else:
+        #     time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
+        #     cv2.putText(image, time_string_bad, (10, h - 20), font, 0.9, red, 2)
+
+        time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
+        cv2.putText(image, time_string_good, (10, h - 45), font, 0.9, green, 2)
+
+        time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
+        cv2.putText(image, time_string_bad, (10, h - 15), font, 0.9, red, 2)
+
+        time_string_total = 'Total Posture Time : ' + str(round(total_time, 1)) + 's'
+        cv2.putText(image, time_string_total, (10, h - 75), font, 0.9, blue, 2)
+
+
+        # print(round(good_time, 2), round(bad_time, 2), round(total_time, 2))
 
         # If you stay in bad posture for more than 3 minutes (180s) send an alert.
         if bad_time > 180:
