@@ -19,9 +19,6 @@ def findAngle(x1, y1, x2, y2):
     degree = int(180 / m.pi) * theta
     return degree
 
-def print_num(num):
-    print(num)
-
 def sendWarning(x):
     pass
 
